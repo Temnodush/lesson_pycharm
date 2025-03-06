@@ -19,6 +19,5 @@ def get_date(date: str) -> str:
 
 user_card = "Visa Platinum 7000792289606361"
 print(mask_account_card(user_card))
-#datatime = "2024-03-11T02:26:18.671407"
-#print(get_date(datatime))
-
+# datatime = "2024-03-11T02:26:18.671407"
+# print(get_date(datatime))
