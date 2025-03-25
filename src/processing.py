@@ -1,10 +1,10 @@
-def filter_by_state(list_dict: list[dict], state: str = "EXECUTED") -> list[dict]:
+def filter_by_state(transactions: list[dict], state: str = "EXECUTED") -> list[dict]:
     """
-    Функция принимает список словарей и возвращает новый список со словарями
-    у которых ключ state равен значению EXECUTED.
+    Функция принимает список словарей и возвращает новый список со словарями,
+    у которых ключ state равен значению `state`.
     """
     new_list = []
-    for i in list_dict:
+    for i in transactions:
         if i["state"] == state:
             new_list.append(i)
     return new_list
