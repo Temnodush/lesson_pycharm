@@ -15,7 +15,7 @@ def mask_account_card(card: str) -> str:
 
 def get_date(date: str) -> str:
     """Принимает дату и приводит её к новому формату."""
-    if date == None:
+    if date is None:
         raise ValueError("Произошла ошибка! Дата отсутствует.")
     new_date = ""
     for i in date:
