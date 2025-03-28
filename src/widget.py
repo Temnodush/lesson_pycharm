@@ -4,7 +4,9 @@ def mask_account_card(card: str) -> str:
     for number in card:
         if number.isdigit():
             numbers += number
-    if card[:4].lower() == "счет":
+    if len(numbers) != 16:
+        raise ValueError("Номер карты должен состоять из 16 цифр.")
+    if card[:4].lower() == "счет" or card[:4].lower() == "счёт":
         mask = f"**{numbers[12:]}"
     else:
         mask = f"{numbers[:4]} {numbers[4:6]}** **** {numbers[12:]}"
@@ -12,12 +14,22 @@ def mask_account_card(card: str) -> str:
 
 
 def get_date(date: str) -> str:
-    """Функция принимает строку с датой и возвращает часть содержимого в нужной последовательности."""
-    full_date = f"{date[8:10]}.{date[5:7]}.{date[:4]}"
-    return full_date
-
-
-user_card = "Visa Platinum 7000792289606361"
-print(mask_account_card(user_card))
-# datatime = "2024-03-11T02:26:18.671407"
-# print(get_date(datatime))
+    """Принимает дату и приводит её к новому формату."""
+    if date is None:
+        raise ValueError("Произошла ошибка! Дата отсутствует.")
+    new_date = ""
+    for i in date:
+        if i.isdigit() and len(new_date) < 8:
+            new_date += i
+    if len(new_date) != 8:
+        raise ValueError("Не удалось извлечь дату в формате YYYYMMDD")
+    date_year = new_date[:4]
+    date_month = new_date[4:6]
+    date_day = new_date[6:]
+    if not 2000 < int(date_year) <= 2025:
+        raise ValueError("Год указан некорректно.")
+    if not 1 <= int(date_month) <= 12:
+        raise ValueError("Месяц указан некорректно.")
+    if not 1 <= int(date_day) <= 31:
+        raise ValueError("День указан некорректно.")
+    return f"{date_day}.{date_month}.{date_year}"
