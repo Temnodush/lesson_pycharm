@@ -60,7 +60,7 @@ def test_card_number_generator_format_correctness():
     ],
 )
 def test_card_number_generator_simple_check(minimum, maximum, expected):
-    """Проверка ожидаемой генерации с параметризацией"""
+    """Проверка ожидаемой генерации с использованием параметризации"""
     result = next(card_number_generator(minimum, maximum))
     assert result == expected
 

@@ -2,7 +2,7 @@ import random
 
 
 def filter_by_currency(transactions, currency):
-    """Принимает список словарей транзакций и нужный код валюты."""
+    """Принимает список словарей транзакций и название валюты. Возвращает транзакцию из списка с искомой валютой."""
     for transaction in transactions:
         if transaction["operationAmount"]["currency"]["code"] == currency:
             yield transaction
@@ -15,6 +15,7 @@ def transaction_descriptions(transactions):
 
 
 def card_number_generator(start=1, stop=9999999999999999):
+    """Генерирует номер карты в диапазоне и приводит в корректный формат."""
     while True:
         new_number = random.randint(start, stop)
         new_number_str = str(new_number)

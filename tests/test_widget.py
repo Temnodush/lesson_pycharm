@@ -13,6 +13,7 @@ from src.widget import get_date, mask_account_card
     ],
 )
 def test_mask_account_card(account_card: str) -> None:
+    """Проверка работы функции mask_account_card"""
     assert mask_account_card(account_card)
 
 
@@ -27,11 +28,13 @@ def test_mask_account_card(account_card: str) -> None:
     ],
 )
 def test_mask_account_card_invalid(account_card: str, exception: type[Exception]) -> None:
+    """Проверка ошибочных аргумнентов в masc_account_card"""
     with pytest.raises(exception):
         mask_account_card(account_card)
 
 
 def test_get_date(standard_date: str) -> None:
+    """Проверка работы функции test_get_date"""
     assert get_date(standard_date)
 
 
@@ -50,5 +53,6 @@ def test_get_date(standard_date: str) -> None:
     ],
 )
 def test_get_date_incorrect(incorrect_date: str, exception: type[Exception]) -> None:
+    """Проверка ошибочных аргументов функции get_date"""
     with pytest.raises(exception):
         get_date(incorrect_date)
