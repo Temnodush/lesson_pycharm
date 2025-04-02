@@ -4,20 +4,20 @@ from src.generators import card_number_generator, filter_by_currency, transactio
 
 
 @pytest.mark.parametrize("transactions_currency", ["USD", "RUB"])
-def test_filter_by_currency(simple_transactions, transactions_currency) -> None:
-    """Проверка поиска существующих валют в списке"""
+def test_filter_by_valid_currency(simple_transactions, transactions_currency) -> None:
+    """Проверка поиска допустимых валют в списке"""
     test_transactions = list(filter_by_currency(simple_transactions, transactions_currency))
     for transaction in test_transactions:
         assert transaction["operationAmount"]["currency"]["code"] == transactions_currency
 
 
-def test_filter_by_currency_not_find(simple_transactions) -> None:
+def test_filter_by_currency_invalid_currency(simple_transactions) -> None:
     """Проверка списка с несуществующей валютой"""
     eur_transactions = list(filter_by_currency(simple_transactions, "EUR"))
     assert len(eur_transactions) == 0  # Длина списка с несуществующей валютой.
 
 
-def test_filter_by_currency_empty_input() -> None:
+def test_filter_by_currency_empty_list() -> None:
     """Проверка пустого списка с существующей валютой"""
     empty_transactions = list(filter_by_currency([], "USD"))
     assert len(empty_transactions) == 0
@@ -59,14 +59,14 @@ def test_card_number_generator_format_correctness():
         (12345, 12345, "0000 0000 0001 2345"),
     ],
 )
-def test_card_number_generator_param(minimum, maximum, expected):
+def test_card_number_generator_simple_check(minimum, maximum, expected):
     """Проверка ожидаемой генерации с параметризацией"""
     result = next(card_number_generator(minimum, maximum))
     assert result == expected
 
 
 def test_card_number_generation_in_range():
-    """Проверка генерации чисел в заданном диапазоне"""
+    """Проверка корректной генерации чисел в заданном диапазоне"""
     min_val = 1
     max_val = 9999999999999999
     generator = card_number_generator(min_val, max_val)
