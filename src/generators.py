@@ -1,5 +1,6 @@
 import random
 
+
 def filter_by_currency(transactions, currency):
     """Принимает список словарей транзакций и нужный код валюты."""
     for transaction in transactions:
@@ -18,5 +19,5 @@ def card_number_generator(start=1, stop=9999999999999999):
         new_number = random.randint(start, stop)
         new_number_str = str(new_number)
         correct_len_number = 16 - len(new_number_str)
-        generated_new_number = "0" * correct_len_number + new_number_str
-        yield f"{generated_new_number[:4]} {generated_new_number[4:8]} {generated_new_number[8:12]} {generated_new_number[12:]}"
+        generated_number = "0" * correct_len_number + new_number_str
+        yield f"{generated_number[:4]} {generated_number[4:8]} {generated_number[8:12]} {generated_number[12:]}"
