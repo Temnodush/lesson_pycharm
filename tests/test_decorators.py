@@ -4,6 +4,7 @@ from src.decorators import log
 
 
 def test_log_success_with_file(tmp_path):
+    """Проверка логирования в файл при успешном выполнении функции"""
     log_file = tmp_path / "test_log.txt"
 
     @log(filename=str(log_file))
@@ -18,6 +19,7 @@ def test_log_success_with_file(tmp_path):
 
 
 def test_log_success_without_filename(capsys):
+    """Проверка вывода лога в консоль при отсутствии файла"""
     @log()
     def subtract(a, b):
         return a - b
@@ -29,6 +31,7 @@ def test_log_success_without_filename(capsys):
 
 
 def test_log_exception_with_file(tmp_path):
+    """Проверка логирования ошибок в файл при делении на ноль"""
     log_file = tmp_path / "error_log.txt"
 
     @log(filename=str(log_file))
@@ -43,6 +46,7 @@ def test_log_exception_with_file(tmp_path):
 
 
 def test_log_preserves_function_identity():
+    """Проверка сохранения метаданных декорируемой функции"""
     @log("my_log.txt")
     def sample():
         """Тестовая функция"""
