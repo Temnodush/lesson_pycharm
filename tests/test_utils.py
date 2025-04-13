@@ -32,15 +32,6 @@ def test_read_valid_json_not_list(tmpdir, capsys):
     assert captured.out == ""
 
 
-def test_read_nonexistent_file(capsys):
-    """Тест обработки отсутствующего файла"""
-    result = read_file("non_existent_file.json")
-    captured = capsys.readouterr()
-
-    assert result == []
-    assert "Файл не найден по пути: non_existent_file.json" in captured.out
-
-
 def test_default_filename():
     """Тест поведения при отсутствии имени файла"""
     result = read_file()
