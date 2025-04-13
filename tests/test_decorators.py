@@ -20,6 +20,7 @@ def test_log_success_with_file(tmp_path):
 
 def test_log_success_without_filename(capsys):
     """Проверка вывода лога в консоль при отсутствии файла"""
+
     @log()
     def subtract(a, b):
         return a - b
@@ -47,6 +48,7 @@ def test_log_exception_with_file(tmp_path):
 
 def test_log_preserves_function_identity():
     """Проверка сохранения метаданных декорируемой функции"""
+
     @log("my_log.txt")
     def sample():
         """Тестовая функция"""
