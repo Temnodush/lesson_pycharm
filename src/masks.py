@@ -47,5 +47,3 @@ def get_mask_account(card_number: str) -> str:
         raise ValueError("Номер должен состоять только из цифр.")
     logger.info("Номер карты успешно зашифрован.")
     return f"XX{card_number[12:]}"
-
-
