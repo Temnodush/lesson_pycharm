@@ -8,6 +8,7 @@ from src.widget import get_date, mask_account_card
 
 
 def choose_file_format():
+    """Запрашивает у пользователя выбор формата файла для обработки транзакций."""
     print(
         "Привет! Добро пожаловать в программу работы\n"
         "с банковскими транзакциями.\n"
@@ -33,6 +34,7 @@ def choose_file_format():
 
 
 def status_filter():
+    """Фильтрует транзакции по статусу, запрашивая выбор пользователя."""
     print(
         """
 Введите статус, по которому необходимо выполнить фильтрацию.
@@ -50,6 +52,7 @@ def status_filter():
 
 
 def sorted_by_date():
+    """Определяет параметры сортировки транзакций по дате (возрастание/убывание)."""
     print("Отсортировать операции по дате? Да/Нет")
     while True:
         sorted_date = input().upper()
@@ -72,6 +75,7 @@ def sorted_by_date():
 
 
 def filter_by_rub():
+    """Активирует фильтрацию транзакций по рублевой валюте (RUB)."""
     print("Выводить только рублевые транзакции? Да/Нет")
     while True:
         change_filter_rub_currency = input().upper()
@@ -85,6 +89,7 @@ def filter_by_rub():
 
 
 def search_status():
+    """Запрашивает необходимость фильтрации по ключевому слову в описании транзакции."""
     print("Отфильтровать список транзакций по определенному слову в описании? Да/Нет")
     while True:
         description_search = input().upper()
@@ -97,7 +102,8 @@ def search_status():
             continue
 
 
-def filter_activated(choose_file, status, by_date, by_rub, description_search):
+def apply_filters(choose_file, status, by_date, by_rub, description_search):
+    """Применяет выбранные фильтры и возвращает обработанный список транзакций."""
     transactions = []
     if choose_file == "JSON":
         transactions = read_json_transactions(PATH_TO_JSON)
@@ -123,12 +129,13 @@ def filter_activated(choose_file, status, by_date, by_rub, description_search):
 
 
 def main():
+    """Функция, которая отвечает за основную логику проекта и связывает функциональности между собой."""
     choose_file = choose_file_format()
     change_status = status_filter()
     sorted_date = sorted_by_date()
     filter_rub = filter_by_rub()
     description_search = search_status()
-    transactions = filter_activated(choose_file, change_status, sorted_date, filter_rub, description_search)
+    transactions = apply_filters(choose_file, change_status, sorted_date, filter_rub, description_search)
     if not transactions:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
         return
