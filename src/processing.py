@@ -1,12 +1,11 @@
 def filter_by_state(transactions: list[dict], state: str = "EXECUTED") -> list[dict]:
-    """
-    Функция принимает список словарей и возвращает новый список со словарями,
-    у которых ключ state равен значению `state`.
-    """
+    """Фильтрует транзакции по статусу (по умолчанию 'EXECUTED')."""
     new_list = []
     for transaction in transactions:
+        if not transaction:
+            continue
         if "state" not in transaction:
-            raise KeyError(f"Ключ 'state' не найден в транзацкии: {transaction}")
+            raise KeyError(f"Ключ 'state' не найден в транзакции: {transaction}")
         if transaction["state"] == state:
             new_list.append(transaction)
     return new_list

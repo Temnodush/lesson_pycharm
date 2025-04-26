@@ -1,10 +1,13 @@
 import random
 
 
-def filter_by_currency(transactions, currency):
-    """Принимает список словарей транзакций и название валюты. Возвращает транзакцию из списка с искомой валютой."""
+def filter_by_currency(transactions: list[dict], currency_code: str):
+    """Фильтрует транзакции по коду валюты (поддерживает разные форматы данных)."""
     for transaction in transactions:
-        if transaction["operationAmount"]["currency"]["code"] == currency:
+        code = transaction.get("operationAmount", {}).get("currency", {}).get("code")
+        if code == currency_code:
+            yield transaction
+        elif transaction.get("currency_code") == currency_code:  # Для CSV
             yield transaction
 
 

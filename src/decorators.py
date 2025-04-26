@@ -38,6 +38,3 @@ def log(filename=None):
 @log("my_log.txt")
 def example_function(x, y):
     return x + y
-
-
-# example_function(1, 2)
