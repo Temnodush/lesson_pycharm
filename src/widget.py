@@ -1,5 +1,6 @@
 from .masks import get_mask_account, get_mask_card_number
 
+
 def mask_account_card(card: str) -> str:
     """Обрабатывает и маскирует номер карты или счета в зависимости от длины номера."""
     numbers = ""
@@ -15,6 +16,7 @@ def mask_account_card(card: str) -> str:
     elif len(numbers) == 20:
         return f"{name} {get_mask_account(numbers)}" if name else get_mask_account(numbers)
     return "Неверный формат номера"
+
 
 def get_date(date_str: str) -> str:
     """Функция принимает строку с датой и возвращает часть содержимого в нужной последовательности."""

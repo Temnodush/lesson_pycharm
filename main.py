@@ -1,21 +1,20 @@
-from src.transactions_read import read_csv_transactions, read_excel_transactions
-from src.utils import read_json_transactions
-from config import PATH_TO_JSON, PATH_TO_CSV, PATH_TO_EXCEL
-from src.processing import filter_by_state, sort_by_date
+from config import PATH_TO_CSV, PATH_TO_EXCEL, PATH_TO_JSON
 from src.filters import filter_description
 from src.generators import filter_by_currency
+from src.processing import filter_by_state, sort_by_date
+from src.transactions_read import read_csv_transactions, read_excel_transactions
+from src.utils import read_json_transactions
 from src.widget import get_date, mask_account_card
 
 
 def choose_file_format():
     print(
-        """
-    Привет! Добро пожаловать в программу работы 
-    с банковскими транзакциями. 
-    Выберите необходимый пункт меню:
-    1. Получить информацию о транзакциях из JSON-файла
-    2. Получить информацию о транзакциях из CSV-файла
-    3. Получить информацию о транзакциях из XLSX-файла"""
+        "Привет! Добро пожаловать в программу работы\n"
+        "с банковскими транзакциями.\n"
+        "Выберите необходимый пункт меню:\n"
+        "1. Получить информацию о транзакциях из JSON-файла\n"
+        "2. Получить информацию о транзакциях из CSV-файла\n"
+        "3. Получить информацию о транзакциях из XLSX-файла"
     )
     while True:
         choose_file = input("> ")
@@ -106,7 +105,6 @@ def filter_activated(choose_file, status, by_date, by_rub, description_search):
         transactions = read_csv_transactions(PATH_TO_CSV)
     elif choose_file == "XLSX":
         transactions = read_excel_transactions(PATH_TO_EXCEL)
-
 
     transactions = filter_by_state(transactions, status)
 

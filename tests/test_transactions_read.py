@@ -1,13 +1,19 @@
-from unittest.mock import Mock, patch, mock_open
+from unittest.mock import Mock, mock_open, patch
+
 import pandas as pd
+
 from src.transactions_read import read_csv_transactions, read_excel_transactions
 
 
-@patch("builtins.open", new_callable=mock_open, read_data=(
+@patch(
+    "builtins.open",
+    new_callable=mock_open,
+    read_data=(
         "id;state;date;amount;currency_name;currency_code;description;from;to\n"
         "1;EXECUTED;2023-01-01;100;RUB;RUB;Payment;Account 1 ;Account2\n"
         "2;PENDING;2023-01-02;200;USD;USD;Transfer;;Account4\n"
-))
+    ),
+)
 def test_read_csv_transactions_success(mock_file):
     """Проверяет корректное чтение и парсинг CSV-файла с транзакциями."""
     result = read_csv_transactions("fake.csv")

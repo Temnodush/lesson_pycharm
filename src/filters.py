@@ -1,6 +1,6 @@
 import re
 from collections import Counter
-from typing import List, Any, Dict
+from typing import Any, Dict, List
 
 
 def filter_description(transactions: List[Dict[str, Any]], search_string):

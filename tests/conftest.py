@@ -1,5 +1,6 @@
+from typing import Dict, List
+
 import pytest
-from typing import List, Dict
 
 
 @pytest.fixture
@@ -25,6 +26,7 @@ def masked_card_account() -> str:
 @pytest.fixture
 def standard_date() -> str:
     return "2024-03-11T02:26:18.671407"
+
 
 @pytest.fixture
 def simple_account_number():
