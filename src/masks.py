@@ -20,30 +20,23 @@ logger.addHandler(file_handler)
 
 
 def get_mask_card_number(card_number: str) -> str:
-    """Функция, которая позволяет шифровать номер карты в формате "1234 12** **** 1234" """
+    """Маскирует номер карты в формате 'XXXX XX** **** XXXX' (16 цифр)."""
     if not card_number.strip():
-        logger.error("Пользователь ввёл некорректное значение.")
+        logger.error("Пустой номер карты.")
         raise ValueError("Необходимо ввести номер")
-    if len(card_number) != 16:
-        logger.error("Пользователь ввёл некорректную длину номера карты.")
-        raise ValueError("Карта должна состоять ровно из 16 цифр.")
-    if not card_number.isdigit():
-        logger.error("Пользователь ввёл не цифровое значение.")
-        raise ValueError("Номер должен состоять только из цифр.")
-    logger.info("Номер карты успешно зашифрован.")
-    return f"{card_number[:4]} {card_number[4:6]}** **** {card_number[12:]}"
+    if len(card_number) != 16 or not card_number.isdigit():
+        logger.error("Неверный формат номера карты.")
+        raise ValueError("Карта должна содержать 16 цифр")
+    logger.info("Номер карты зашифрован.")
+    return f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:]}"
 
-
-def get_mask_account(card_number: str) -> str:
-    """Функция, которая выводит 4 последние цифры карты и шифрует две предыдущие."""
-    if card_number == "" or card_number == " ":
-        logger.error("Пользователь ввёл некорректное значение.")
+def get_mask_account(account_number: str) -> str:
+    """Маскирует номер счета в формате '**XXXX' (последние 4 цифры из 20)."""
+    if not account_number.strip():
+        logger.error("Пустой номер счета.")
         raise ValueError("Необходимо ввести номер")
-    elif len(card_number) != 16:
-        logger.error("Пользователь ввёл некорректную длину номера карты.")
-        raise ValueError("Карта должна состоять ровно из 16 цифр.")
-    elif not card_number.isdigit():
-        logger.error("Пользователь ввёл не цифровое значение.")
-        raise ValueError("Номер должен состоять только из цифр.")
-    logger.info("Номер карты успешно зашифрован.")
-    return f"XX{card_number[12:]}"
+    if len(account_number) != 20 or not account_number.isdigit():
+        logger.error("Неверный формат номера счета.")
+        raise ValueError("Счет должен содержать 20 цифр")
+    logger.info("Номер счета зашифрован.")
+    return f"**{account_number[-4:]}"

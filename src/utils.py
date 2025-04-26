@@ -20,8 +20,9 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(file_handler)
 
 
-def read_file(filename=None):
-    """Функция чтения файла с транзакциями."""
+def read_json_transactions(filename=None):
+    """Функция чтения файла с JSON транзакциями."""
+
     if filename is None:
         logger.error("Читаемый файл не указан.")
         return []

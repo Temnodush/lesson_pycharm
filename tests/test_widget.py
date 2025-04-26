@@ -3,56 +3,31 @@ import pytest
 from src.widget import get_date, mask_account_card
 
 
-@pytest.mark.parametrize(
-    "account_card",
-    [
-        "Счёт 1234123412341234",  # Ошибка с использованием символов.
-        "MasterCard 1111222233334444",
-        "СЧЕТ 1111222233334444",  # Ошибка с использованием букв.
-        "MIR 1234123412341234",
-    ],
-)
-def test_mask_account_card(account_card: str) -> None:
-    """Проверка работы функции mask_account_card"""
-    assert mask_account_card(account_card)
+@pytest.mark.parametrize("card, expected", [
+    ("Visa Classic 1234567890123456", "Visa Classic 1234 56** **** 3456"),
+    ("Mastercard 9876543210987654", "Mastercard 9876 54** **** 7654"),
+    ("Счет 12345678901234567890", "Счет **7890"),
+    ("", "Неверный формат номера"),
+    ("Невалидный номер", "Неверный формат номера")
+])
+def test_mask_account_card(card, expected):
+    """Проверяет корректность маскирования различных форматов карт и счетов."""
+    assert mask_account_card(card) == expected
 
+@pytest.mark.parametrize("date_str, expected", [
+    ("2023-10-26T00:00:00", "26.10.2023"),
+    ("2024-01-01T12:00:00", "01.01.2024")
+])
+def test_get_date_valid(date_str, expected):
+    """Проверяет преобразование валидных дат в DD.MM.YYYY."""
+    assert get_date(date_str) == expected
 
-@pytest.mark.parametrize(
-    "account_card, exception",
-    [
-        ("Счёт 123412341234123!", ValueError),  # Ошибка с использованием символов.
-        ("MasterCard 11112222333344445555", ValueError),  # Ошибка длины.
-        ("123 abcdefghijklmnop", ValueError),  # Ошибка с использованием букв.
-        ("", ValueError),
-        (" ", ValueError),
-    ],
-)
-def test_mask_account_card_invalid(account_card: str, exception: type[Exception]) -> None:
-    """Проверка ошибочных аргумнентов в masc_account_card"""
-    with pytest.raises(exception):
-        mask_account_card(account_card)
-
-
-def test_get_date(standard_date: str) -> None:
-    """Проверка работы функции test_get_date"""
-    assert get_date(standard_date)
-
-
-# 2024-03-11T02:26:18.671407
-
-
-@pytest.mark.parametrize(
-    "incorrect_date, exception",
-    [
-        ("123456789123456ASDASD", ValueError),  # Ошибка с использованием символов.
-        ("MasterCard 11112222333344445555", ValueError),  # Ошибка длины.
-        ("123 abcdefghijklmnop", ValueError),  # Ошибка с использованием букв.
-        ("", ValueError),
-        (" ", ValueError),
-        (None, ValueError),
-    ],
-)
-def test_get_date_incorrect(incorrect_date: str, exception: type[Exception]) -> None:
-    """Проверка ошибочных аргументов функции get_date"""
-    with pytest.raises(exception):
-        get_date(incorrect_date)
+@pytest.mark.parametrize("invalid_date", [
+    "",
+    "26.10.2023T00:00:00",
+    "2023-10-26"
+])
+def test_get_date_invalid(invalid_date):
+    """Проверяет обработку невалидных форматов даты (вызов исключения)."""
+    with pytest.raises(ValueError):
+        get_date(invalid_date)

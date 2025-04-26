@@ -1,7 +1,7 @@
 import json
 from unittest.mock import mock_open, patch
 
-from src.utils import read_file
+from src.utils import read_json_transactions
 
 
 @patch("json.load")
@@ -12,7 +12,7 @@ def test_read_valid_json_list(mock_open_func, mock_json_load):
     mock_json_load.return_value = test_data
     mock_open_func.return_value = mock_open(read_data=json.dumps(test_data)).return_value
 
-    result = read_file("dummy_path.json")
+    result = read_json_transactions("dummy_path.json")
 
     mock_open_func.assert_called_once_with("dummy_path.json", "r", encoding="utf-8")
     mock_json_load.assert_called_once()
@@ -25,7 +25,7 @@ def test_read_valid_json_not_list(tmpdir, capsys):
     file = tmpdir.join("test.json")
     file.write(json.dumps(data))
 
-    result = read_file(file.strpath)
+    result = read_json_transactions(file.strpath)
     captured = capsys.readouterr()
 
     assert result == []
@@ -34,7 +34,7 @@ def test_read_valid_json_not_list(tmpdir, capsys):
 
 def test_default_filename():
     """Тест поведения при отсутствии имени файла"""
-    result = read_file()
+    result = read_json_transactions()
     assert result == []
 
 
@@ -42,5 +42,5 @@ def test_default_filename():
 def test_read_file_not_found(mock_open):
     """Тест возвращает пустой список при отсутствии файла"""
     mock_open.side_effect = FileNotFoundError
-    result = read_file("nonexistent.json")
+    result = read_json_transactions("nonexistent.json")
     assert result == []

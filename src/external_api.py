@@ -1,6 +1,5 @@
 import os
 from typing import Any
-
 import requests
 from dotenv import load_dotenv
 
@@ -30,11 +29,3 @@ def convert_amount(transaction) -> float | None | Any:
             raise RuntimeError(f"Ошибка конвертации: {e}")
     else:
         return amount
-
-
-transactions_finance = {
-    "id": 441945886,
-    "state": "EXECUTED",
-    "date": "2019-08-26T10:50:58.294041",
-    "operationAmount": {"amount": "100", "currency": {"code": "USD"}},
-}
